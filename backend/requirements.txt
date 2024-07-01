@@ -1,2 +1,4 @@
 openai
 python-dotenv
+demucs
+numpy<2.0.0
