@@ -18,6 +18,9 @@ module.exports = {
       "darkgrey": "#D9D9D9",
       "lightgrey": '#EBEBEB',
       'purple': "A2A8FF",
+    },
+    fontFamily:{
+        default: ['Roboto', 'sans-serif']
     }
   },
   plugins: [],
