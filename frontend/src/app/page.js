@@ -1,9 +1,9 @@
-import Image from "next/image";
 
+import FileForm  from "./components/FileForm";
 export default function Home() {
   return (
-    <main className="bg-lightgrey h-[100vh]">
-      
+    <main className="bg-darkgrey h-[100vh]">
+      <FileForm/>
     </main>
   );
 }
