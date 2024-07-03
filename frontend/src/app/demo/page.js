@@ -1,9 +1,10 @@
 "use client";
-import Navbar from "../components/Navbar";
+import FileForm from "../components/FileForm";
+import TranslateDescription from "../components/TranslateDescription";
 export default function Home() {
   return (
     <main className="bg-darkgrey h-[100vh] flex flex-row items-center justify-center">
-      <Navbar />
+      <TranslateDescription /><FileForm/>
     </main>
   );
 }
