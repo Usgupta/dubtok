@@ -17,7 +17,8 @@ module.exports = {
         "darkgrey": "#D9D9D9",
         "lightgrey": '#EBEBEB',
         'purple': "#A2A8FF",
-        "black": '#000000'
+        "black": '#000000',
+        "red":"#fe2c55",
       },
       fontFamily:{
           default: ['Roboto', 'sans-serif'],
