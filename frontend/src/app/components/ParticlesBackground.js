@@ -303,7 +303,7 @@ export default function ParticleBackground(){
                   mode: "delete",
                   value: 0
                 },
-                value: 400
+                value: 600
               },
               opacity: {
                 value: 1,
