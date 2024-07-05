@@ -12,7 +12,7 @@ export default function FormDrop() {
     }
   } 
   return (
-    <Dropdown theme={{ floating: { target: "bg-white px-0 text-black w-30" } }} label={selected} dismissOnClick={false}>
+    <Dropdown  theme={{ floating: { target: "hover:bg-lightgrey bg-white px-0 text-black w-32"} }} label={selected} dismissOnClick={false}>
       <Dropdown.Item onClick={() => setSelected("English")}>English</Dropdown.Item>
       <Dropdown.Item onClick={() => setSelected("Hindi")}>Hindi</Dropdown.Item>
       <Dropdown.Item onClick={() => setSelected("Chinese")}>Chinese</Dropdown.Item>
