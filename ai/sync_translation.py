@@ -2,6 +2,7 @@ import ffmpeg
 import math
 import json
 from pydub import AudioSegment
+import os
 
 
 def adjust_audio_duration(input_file, output_file, target_duration_seconds):
@@ -44,7 +45,9 @@ def sync_audio():
     combined = AudioSegment.empty()
 
     for k in range(len(translated_chunks)):
-            # Example usage:
+
+
+        # print(len(translated_chunks), k, 'HERE IT ISSSS------')
         input_file = f"../ai/output_audio/translated_chunk{k}.wav"
         output_file = f"../ai/output_audio/sync_chunk{k}.wav"
         target_duration = translated_chunks[k]["duration"]  # Target duration in seconds
@@ -52,7 +55,11 @@ def sync_audio():
 
         adjust_audio_duration(input_file, output_file, target_duration)
 
-        
+        try:
+            os.remove(input_file)
+            print(f'\n Deleted file {input_file}')
+        except:
+            print(f'\n Cant Delete file {input_file}')
 
         # sync_audio(input_file,output_file,target_duration)
         combined+=AudioSegment.from_file(output_file)

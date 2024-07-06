@@ -10,7 +10,7 @@ load_dotenv()
 api_key = os.getenv("PLAYHT_APIKEY")
 userid = os.getenv("PLAYHT_USERID")
 
-print(userid)
+# print(userid)
 
 
 # Define the headers

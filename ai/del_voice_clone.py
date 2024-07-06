@@ -2,7 +2,7 @@ import requests
 import os
 from dotenv import load_dotenv
 
-# voice_id = 's3://voice-cloning-zero-shot/7af03cba-0861-4713-a9b5-eb9afdb52038/cookie/manifest.json'
+# voice_id = 's3://voice-cloning-zero-shot/8510399a-5178-48e9-b4a6-ffeb6b3333d1/cookie/manifest.json'
 
 def del_vc(voice_id):
 
@@ -22,3 +22,4 @@ def del_vc(voice_id):
     response = requests.delete(url, json=payload, headers=headers)
 
     print(response.text)
+# del_vc(voice_id)

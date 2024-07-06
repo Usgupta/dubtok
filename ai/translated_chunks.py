@@ -24,9 +24,8 @@ def create_translated_transcription(target_language):
     
     translated_json.append(translated_item)
 
-
-  with open("../ai/translated_json.json", "w") as json_file:
-    json.dump(translated_json, json_file, indent=4)
+  with open("../ai/translated_json.json", "w", encoding="utf-8") as json_file:
+        json.dump(translated_json, json_file, indent=4, ensure_ascii=False)
 
 
 def translate(message, target_language):

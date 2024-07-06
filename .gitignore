@@ -2,7 +2,11 @@
 __pycache__/
 ai/__pycache__/
 backend/__pycache__/
+backend/output
 ai/chunks
 ai/output_audio
 ai/separated
+ai/uploads
+uploads
 *.db
+

@@ -4,7 +4,7 @@ import wave
 import tempfile
 from pydub import AudioSegment
 
-def newshit():
+def new():
 
     transcription = open("../ai/translated_json.json")
     data = json.load(transcription)

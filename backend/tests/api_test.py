@@ -9,7 +9,7 @@ def post_test():
 
     files = {
         'file': open('../../sample_videos/cookie.mp4', 'rb'),
-        'dub_type': (None, 'French'),
+        'dub_type': (None, 'Malay'),
     }
 
     response = requests.post('http://127.0.0.1:8000/upload/', headers=headers, files=files)

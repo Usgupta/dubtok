@@ -10,12 +10,12 @@ from botocore.exceptions import NoCredentialsError, ClientError
 from dotenv import load_dotenv
 import os
 import shutil
+from services.video_audio_processor import separate_audio_video, combine_audio_video
 
 import sys
 sys.path.append('../')
 
 from ai.ai_service import dubbing 
-
 
 # Creates the tables in the database if it is not already present
 create_tables()
@@ -57,8 +57,19 @@ async def upload_video(file: UploadFile = File(...), dub_type: str = Form(...), 
     # Save the uploaded file
     with open(file_path, "wb") as file_obj:
         shutil.copyfileobj(file.file, file_obj)
+
+    filename = os.path.splitext(file.filename)[0]
+
+    audio_file_path = f"../uploads/{filename}.mp3"
+    noaudio_video_file_path = f"../uploads/{filename}_noaudio.mp4"
+
+    separate_audio_video(file_path, audio_file_path,noaudio_video_file_path )
     
-    dubbed_video_file_path = dubbing(file_path, dub_type)
+    dubbed_audio_file_path = dubbing(audio_file_path, dub_type, filename)
+
+    dubbed_video_file_path = f'output/{filename}.mp4'
+
+    combine_audio_video(noaudio_video_file_path,dubbed_audio_file_path, dubbed_video_file_path)
 
     try:
 
@@ -81,15 +92,3 @@ async def get_video(video_id: str, db: Session = Depends(get_db)):
     if db_video is None:
         raise HTTPException(status_code=404, detail="Video not found")
     return db_video
-
-
-# def save_file(uploaded_file):
-#     upload_directory = "../ai/uploads"
-#     os.makedirs(upload_directory, exist_ok=True)  # Create the directory if it doesn't exist
-#     file_path = os.path.join(upload_directory, uploaded_file.filename)
-
-#     # Save the uploaded file
-#     with open(file_path, "wb") as file_obj:
-#         shutil.copyfileobj(uploaded_file.file, file_obj)
-    
-#     return file_path

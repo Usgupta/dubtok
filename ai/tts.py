@@ -11,8 +11,6 @@ import time
 
 load_dotenv()
 
-
-
 client = Client(
    api_key = os.getenv("PLAYHT_APIKEY"),
    user_id = os.getenv("PLAYHT_USERID")
@@ -29,19 +27,20 @@ client = Client(
 def generate_tts(voice_id):
 
     audio_segs = []
-    transcription = open("../ai/translated_json.json")
+    transcription = open("../ai/translated_json.json", encoding='utf-8')
     data = json.load(transcription)
 
     # List to store audio chunks
-    audio_chunks = []
 
-    all_audio_chunks = []
+    audio_chunks = []
+    
 
     # voice_id = "s3://voice-cloning-zero-shot/8a9188ec-16d5-4e97-a328-fde0ec35a611/umang/manifest.json"
 
     options = TTSOptions(voice=voice_id,)
 
     for k in range(len(data)):
+      
 
         print(data[k]["translated"])
 
@@ -73,25 +72,22 @@ def generate_tts(voice_id):
 
                 # Export the combined audio segment to a WAV file
                 combined.export(f"../ai/output_audio/translated_chunk{k}.wav", format="wav")
-                all_audio_chunks.append(audio_chunks)
+
                 audio_chunks = []
 
-                print(f"Audio saved to output{k}.wav")
+                print(f"Audio saved to translated_chunk{k}.wav")
 
             time.sleep(1)
 
         except Exception as e:
             print(f"Error processing item {k}: {e}")
             continue
-
-        
-
-    print("done")
+    
+    print(f"\n Translated chunks all complete")
+    
 
 # print(audio_chunks)
-# for chunk_file in audio_chunks:
-#         os.remove(chunk_file)
-#         print(f'Deleted {chunk_file}')
+    
 
     
 

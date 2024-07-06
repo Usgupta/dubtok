@@ -5,16 +5,14 @@ import ai.voice_clone as voice_clone
 import ai.tts as tts
 import ai.fix_tts as fix_tts
 import ai.sync_translation as sync_translation
-import os
-import shutil
 import ai.del_voice_clone as delvc
-
+from ai.stitch import translated_audio_track
 import ai.newtest as newtest
-
-audio_file = "../cookie.mp4"
-
 from pydub import AudioSegment
 import io
+
+
+# audio_file = "../cookie.mp4"
 
 def save_file_object_as_mp3(file_object, output_file_path):
     # Read the audio data from the file object
@@ -37,12 +35,16 @@ def preprocess(audio_file):
     # Separate the audio clip into vocals and no vocals
     demucs.separate.main(["--mp3", "--two-stems", "vocals", "-n", "mdx_extra", audio_file])
 
-def dubbing(file_path, dub_type):
+def dubbing(file_path, dub_type, filename):
 
-    # newtest.newshit()
-    # preprocess(file_path)
+    # newtest.new()
+    preprocess(file_path)
 
-    vocal_file = 'separated/mdx_extra/cookie/vocals.mp3'
+    vocal_file = f'separated/mdx_extra/{filename}/vocals.mp3'
+
+    novocal_file = f'separated/mdx_extra/{filename}/no_vocals.mp3'
+
+    dubbed_audio_path = '../ai/output_audio/translated_final.mp3'
 
     transcribe.transcribe(vocal_file)
 
@@ -50,7 +52,7 @@ def dubbing(file_path, dub_type):
 
     voice_id = voice_clone.create_voice_clone(vocal_file)
 
-    print("VOICE ID------", voice_id)
+    # print("VOICE ID------", voice_id)
 
     tts.generate_tts(voice_id)
 
@@ -59,6 +61,12 @@ def dubbing(file_path, dub_type):
     sync_translation.sync_audio()
 
     delvc.del_vc(voice_id)
+
+    translated_audio_track(novocal_file, dubbed_audio_path)
+
+    return dubbed_audio_path
+
+
 
 
 
