@@ -1,11 +1,13 @@
+import SmallButton from "./SmallButton"
 import VideoPreview from "./VideoPreview"
 
-export default function PreviewPage({videoFile}){
+export default function PreviewPage({videoFile, resetPage}){
     return(
-   <div className={"h-[500px] w-[700px] p-10 mr-3 border-black border-2 bg-lightgrey border-black border-2 drop-shadow-xl rounded-[18px] flex flex-col items-center justify-start"}>
-    <h1 className="text-4xl font-poppins mb-10">
+   <div>
+    <h1 className="text-2xl  md:text-4xl font-poppins mb-10">
         Your Video is Ready!
     </h1>
     <VideoPreview videoFile ={videoFile}/>
+    <SmallButton className= "bg-red hover:bg-darkred mb-5 mt-5 ml-auto" text="Dub Another File!" onClick={resetPage}/>
     </div>)
 }

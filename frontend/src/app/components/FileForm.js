@@ -31,6 +31,10 @@ export default function FileForm(){
         alert("Select Translation Language")
     }
     }
+
+    function reset(){
+        setResultState("start");
+    }
     if (resultState == "start"){    
         return (
     
@@ -48,7 +52,10 @@ export default function FileForm(){
     }
     
     if (resultState == "end"){
-        return (<PreviewPage videoFile={resultsURL}/>)
+        return (
+            <div className={`mr-10 transition-all duration-300 ${(fileState == "active" ? "h-[400px] md:h-[550px] w-[250px] lg:w-[750px] p-5 pt-5 lg:pt-10" : "h-[450px] w-[400px] lg:w-[600px] p-10")} bg-lightgrey border-black border-2 drop-shadow-xl rounded-[18px] flex flex-col items-center justify-between`}>
+        <PreviewPage videoFile={resultsURL} resetPage={reset}/>
+         </div>)
     }
 
     }           
