@@ -1,0 +1,7 @@
+openai
+python-dotenv
+demucs
+ffmpeg
+pydub
+pyht
+numpy<2.0.0
