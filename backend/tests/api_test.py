@@ -8,8 +8,8 @@ def post_test():
     }
 
     files = {
-        'file': open('../../sample_videos/sample1.webm', 'rb'),
-        'dub_type': (None, 'french'),
+        'file': open('../../sample_videos/cookie.mp4', 'rb'),
+        'dub_type': (None, 'French'),
     }
 
     response = requests.post('http://127.0.0.1:8000/upload/', headers=headers, files=files)

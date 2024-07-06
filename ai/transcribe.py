@@ -1,4 +1,4 @@
-from openai_setup import setup_openai
+from ai.openai_setup import setup_openai
 import json
 
 
@@ -21,5 +21,5 @@ def transcribe(audio_file):
   transcript_dict = transcript.to_dict()
 
   # Save the entire JSON response
-  with open("transcription.json", "w") as json_file:
+  with open("../ai/transcription.json", "w") as json_file:
       json.dump(transcript_dict, json_file, indent=4)

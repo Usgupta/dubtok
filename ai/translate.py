@@ -1,4 +1,4 @@
-from openai_setup import setup_openai
+from ai.openai_setup import setup_openai
 
 
 message = "你妈妈没有毛"

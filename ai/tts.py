@@ -29,7 +29,7 @@ client = Client(
 def generate_tts(voice_id):
 
     audio_segs = []
-    transcription = open("translated_json.json")
+    transcription = open("../ai/translated_json.json")
     data = json.load(transcription)
 
     # List to store audio chunks
@@ -48,7 +48,7 @@ def generate_tts(voice_id):
         try:
 
             with tempfile.TemporaryDirectory() as tmpdirname:
-                tmpdirname = "chunks/"
+                tmpdirname = "../ai/chunks/"
                 for i, chunk in enumerate(client.tts(data[k]["translated"], options)):
 
                     # print(chunk)
@@ -72,7 +72,7 @@ def generate_tts(voice_id):
                     combined += chunk_audio
 
                 # Export the combined audio segment to a WAV file
-                combined.export(f"output_audio/translated_chunk{k}.wav", format="wav")
+                combined.export(f"../ai/output_audio/translated_chunk{k}.wav", format="wav")
                 all_audio_chunks.append(audio_chunks)
                 audio_chunks = []
 

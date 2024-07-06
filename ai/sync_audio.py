@@ -24,7 +24,7 @@ def sync_audio(input_file, output_file, target_duration):
 
 
 
-translated_json  = open("translated_json.json")
+translated_json  = open("../ai/translated_json.json")
 translated_chunks = json.load(translated_json)
 
 combined = AudioSegment.empty()

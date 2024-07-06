@@ -8,6 +8,14 @@ import uuid
 from datetime import datetime
 from botocore.exceptions import NoCredentialsError, ClientError
 from dotenv import load_dotenv
+import os
+import shutil
+
+import sys
+sys.path.append('../')
+
+from ai.ai_service import dubbing 
+
 
 # Creates the tables in the database if it is not already present
 create_tables()
@@ -41,7 +49,19 @@ async def upload_video(file: UploadFile = File(...), dub_type: str = Form(...), 
     # Unique id for each video
     video_id = str(uuid.uuid4())
 
+
+    upload_directory = "../uploads"
+    os.makedirs(upload_directory, exist_ok=True)  # Create the directory if it doesn't exist
+    file_path = os.path.join(upload_directory, file.filename)
+
+    # Save the uploaded file
+    with open(file_path, "wb") as file_obj:
+        shutil.copyfileobj(file.file, file_obj)
+    
+    dubbed_video_file_path = dubbing(file_path, dub_type)
+
     try:
+
         # Upload the video into AWS s3
         s3.upload_fileobj(file.file, BUCKET_NAME, video_id + "/" + dub_type + "_" + file.filename)
         file_url = f"https://{BUCKET_NAME}.s3.amazonaws.com/{video_id}/{dub_type}_{file.filename}"
@@ -61,3 +81,15 @@ async def get_video(video_id: str, db: Session = Depends(get_db)):
     if db_video is None:
         raise HTTPException(status_code=404, detail="Video not found")
     return db_video
+
+
+# def save_file(uploaded_file):
+#     upload_directory = "../ai/uploads"
+#     os.makedirs(upload_directory, exist_ok=True)  # Create the directory if it doesn't exist
+#     file_path = os.path.join(upload_directory, uploaded_file.filename)
+
+#     # Save the uploaded file
+#     with open(file_path, "wb") as file_obj:
+#         shutil.copyfileobj(uploaded_file.file, file_obj)
+    
+#     return file_path
