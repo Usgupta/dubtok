@@ -29,7 +29,7 @@ const fetchResults = async (videoId) => {
     let fetchedRegions = null;
 
     try {
-        const response = await fetch(`http://localhost:8000/videos/${videoId}`, {
+        const response = await fetch(`http://127.0.0.1:8000/videos/${videoId}`, {
             method: 'GET'
         });
 
@@ -50,4 +50,7 @@ function helloWorld(){
 }
 
 
-export { uploadVideoFile, fetchResults, helloWorld}
+function getURL(videoId, dubType, fileName){
+    return `https://tiktoktechjam-2024.s3.ap-southeast-1.amazonaws.com/${videoId}/${dubType}_${fileName}`
+}
+export { uploadVideoFile, fetchResults, helloWorld, getURL}

@@ -9,8 +9,8 @@ export default function Uploadfile({ setFile, filetype }) {
     const handleFileChange = (acceptedFiles) => {
         setVideoFile(acceptedFiles[0])
         setVideoState("active")
-        setFile("active")
-        console.log("active")
+        setFile(acceptedFiles[0])
+      
     }
     const [videoFile, setVideoFile] = useState();
     const [videoState, setVideoState] = useState("start");
@@ -18,7 +18,7 @@ export default function Uploadfile({ setFile, filetype }) {
     if (videoState == "active"){
         return(
             <Suspense fallback = {<Loading/>}>
-            <VideoPreview videoFile={videoFile}/>
+            <VideoPreview videoFile={URL.createObjectURL(videoFile)}/>
             </Suspense>
             
         )

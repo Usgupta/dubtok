@@ -6,7 +6,7 @@ export default function VideoPreview({videoFile}){
 
     var [widthName, setWidth] = useState()
     var video = document.createElement('video');
-    var src = URL.createObjectURL(videoFile);
+    var src = videoFile;
     video.src = src
     video.onloadedmetadata = () => {
         console.log("done")
@@ -20,7 +20,7 @@ export default function VideoPreview({videoFile}){
     return(
         <video
         className={widthName} controls>
-        <source src={URL.createObjectURL(videoFile)}/>
+        <source src={videoFile}/>
         </video> 
     )
     
