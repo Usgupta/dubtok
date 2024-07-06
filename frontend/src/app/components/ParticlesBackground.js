@@ -527,5 +527,5 @@ export default function ParticleBackground({className}){
         );
       }
     
-      return <div className={`bg-lightgrey w-full h-[50%] absolute -z-10 ${className}`}></div>;
+      return <div className={`bg-lightgrey w-full h-full absolute -z-10 ${className}`}></div>;
 }
