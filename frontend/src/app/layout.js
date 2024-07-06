@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className } >
         <Navbar/>
-        <ParticleBackground/>
+        <ParticleBackground className="overflow-hidden"/>
         {children}</body>
     </html>
   );
