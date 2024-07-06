@@ -5,3 +5,4 @@ backend/__pycache__/
 ai/chunks
 ai/output_audio
 ai/separated
+*.db

@@ -1,0 +1,9 @@
+openai
+python-dotenv
+demucs
+numpy<2.0.0
+fastapi
+boto3
+sqlalchemy
+pydantic
+requests
