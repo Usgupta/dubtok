@@ -34,12 +34,12 @@ export default function FileForm(){
     if (resultState == "start"){    
         return (
     
-            <div className={`mr-10 transition-all duration-300 ${(fileState == "active" ? "h-[500px] w-[750px] p-5 pt-10" : "h-[450px] w-[600px] p-10")} bg-lightgrey border-black border-2 drop-shadow-xl rounded-[18px] flex flex-col items-center justify-between`}>
-                <h1 className='font-medium text-4xl w-[90%] mb-2'>Translate your Content</h1>
+            <div className={`mr-10 transition-all duration-300 ${(fileState == "active" ? "h-[500px] w-[250px] lg:w-[750px] p-5 pt-5 lg:pt-10" : "h-[450px] w-[400px] lg:w-[600px] p-10")} bg-lightgrey border-black border-2 drop-shadow-xl rounded-[18px] flex flex-col items-center justify-between`}>
+                <h1 className='font-medium text-lg lg:text-3xl xl:text-4xl font-bold w-[90%] mb-2'>Translate your Content</h1>
                 <Uploadfile setFile = {setFile}/>
-                <div className="w-[80%] flex flex-row items-center justify-end">
+                <div className="w-[80%] flex flex-row items-center justify-center xl:justify-end">
                     <FormDrop setDub = {setDub}/>
-                    <SmallButton onClick={sendFile} text="Dub It!" className="ml-10 bg-darkpurple hover:bg-purple drop-shadow-lg"/>
+                    <SmallButton onClick={sendFile} text="Submit!" className="ml-2 lg:ml-10 bg-darkpurple hover:bg-purple drop-shadow-lg"/>
                 </div>
                 
             </div>
@@ -50,4 +50,4 @@ export default function FileForm(){
         return (<PreviewPage videoFile={resultsURL}/>)
     }
 
-    }       
+    }           
