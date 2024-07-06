@@ -11,19 +11,13 @@ export default function VideoPreview({videoFile}){
     video.onloadedmetadata = () => {
         var width = video.videoWidth;
         var height = video.videoHeight;
-        setWidth((width >= height) ? "w-[90%]" : "h-[80%]")
+        setWidth((width >= height) ? "w-[100%]" : "h-[80%]")
     };
    
 
 
         return(
-            <video onLoad={(response) => {
-
-                const { width, height } = response.naturalSize;
-                setWidth((width >= height) ? "w-[90%]" : "w-[10%]")
-
-                setWidth("cock")
-            }}
+            <video 
             className={widthName} controls>
             <source src={URL.createObjectURL(videoFile)}/>
             </video>

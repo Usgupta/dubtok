@@ -3,6 +3,7 @@
 import Dropzone, { Accept } from "react-dropzone";
 import { Suspense, useState } from "react";
 import Loading from "./Loading"
+import Button from "./Button"
 import VideoPreview from "./VideoPreview"
 export default function Uploadfile({ setFile, filetype }) {
 
@@ -15,11 +16,19 @@ export default function Uploadfile({ setFile, filetype }) {
     const [videoFile, setVideoFile] = useState();
     const [videoState, setVideoState] = useState("start");
 
+    function clearVideo(e){
+        e.preventDefault();
+        console.log("test");
+        setVideoState("inactive");
+        return
+    }
     if (videoState == "active"){
         return(
             <Suspense fallback = {<Loading/>}>
+            <div className="inline-block w-[90%]">
             <VideoPreview videoFile={videoFile}/>
-            Clear
+            <Button className="bg-black hover:bg-darkgrey drop-shadow mr-auto" text="Clear Video" onClick={clearVideo}/>
+            </div>
             </Suspense>
             
         )
