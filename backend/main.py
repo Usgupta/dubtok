@@ -8,12 +8,25 @@ import uuid
 from datetime import datetime
 from botocore.exceptions import NoCredentialsError, ClientError
 from dotenv import load_dotenv
+from fastapi.middleware.cors import CORSMiddleware
+
 
 # Creates the tables in the database if it is not already present
 create_tables()
 
 # Defines the FastAPI application
 app = FastAPI()
+origins = [
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Interface with methods that map to AWS s3
 s3 = boto3.client('s3')
