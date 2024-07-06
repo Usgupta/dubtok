@@ -19,6 +19,7 @@ export default function Uploadfile({ setFile, filetype }) {
         return(
             <Suspense fallback = {<Loading/>}>
             <VideoPreview videoFile={videoFile}/>
+            Clear
             </Suspense>
             
         )
