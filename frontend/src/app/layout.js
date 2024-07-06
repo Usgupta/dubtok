@@ -19,8 +19,8 @@ const inter =  Inter({
 });
 
 export const metadata = {
-  title: 'Page Title',
-  description: 'Page Description',
+  title: 'Dubtok',
+  description: 'Dub your videos!',
 }
 
 
