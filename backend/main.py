@@ -19,7 +19,7 @@ root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(root_dir)
 sys.path.append('../')
 
-from ai.ai_service import dubbing 
+from ai.ai_service import dubbing
 
 
 # Creates the tables in the database if it is not already present
@@ -28,6 +28,9 @@ create_tables()
 # Defines the FastAPI application
 app = FastAPI()
 origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
     "http://localhost:3000",
 ]
 
@@ -53,7 +56,7 @@ def get_db():
         yield db
     finally:
         db.close()
-    
+
 # Debug
 @app.get("/")
 def read_root():
@@ -80,7 +83,7 @@ async def upload_video(file: UploadFile = File(...), dub_type: str = Form(...), 
     noaudio_video_file_path = f"../uploads/{filename}_noaudio.mp4"
 
     separate_audio_video(file_path, audio_file_path,noaudio_video_file_path )
-    
+
     dubbed_audio_file_path = dubbing(audio_file_path, dub_type, filename)
 
     dubbed_video_file_path = f'output/{filename}.mp4'
@@ -92,7 +95,7 @@ async def upload_video(file: UploadFile = File(...), dub_type: str = Form(...), 
         # Upload the video into AWS s3
         s3.upload_file(dubbed_video_file_path, BUCKET_NAME, video_id + "/" + dub_type + "_" + filename + ".mp4")
         # file_url = f"https://{BUCKET_NAME}.s3.amazonaws.com/{video_id}/{dub_type}_{filename}"
-        
+
         # Creates a video record in the database
         db_video = crud.create_video(db, video_id, filename+".mp4", datetime.now())
         return db_video
