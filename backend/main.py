@@ -1,3 +1,4 @@
+from services.cleanup_temporary_files import cleanup_temporary_files
 from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, Form
 from sqlalchemy.orm import Session
 from db.database import SessionLocal, create_tables
@@ -72,26 +73,27 @@ async def upload_video(file: UploadFile = File(...), dub_type: str = Form(...), 
     # Unique id for each video
     video_id = str(uuid.uuid4())
 
-
+    # Creates uploads directory containing video file uploads used for local processing if it doesn't exist
     upload_directory = "../uploads"
-    os.makedirs(upload_directory, exist_ok=True)  # Create the directory if it doesn't exist
+    os.makedirs(upload_directory, exist_ok=True) 
     file_path = os.path.join(upload_directory, file.filename)
 
     # Save the uploaded file
     with open(file_path, "wb") as file_obj:
         shutil.copyfileobj(file.file, file_obj)
-
+        
     filename = os.path.splitext(file.filename)[0]
-
     audio_file_path = f"../uploads/{filename}.mp3"
     noaudio_video_file_path = f"../uploads/{filename}_noaudio.mp4"
 
-    separate_audio_video(file_path, audio_file_path,noaudio_video_file_path )
+    # Separate the audio from the video file
+    separate_audio_video(file_path, audio_file_path, noaudio_video_file_path)
 
+    # Dubs the audio 
     dubbed_audio_file_path = dubbing(audio_file_path, dub_type, filename)
 
+    # Mixes the dubbed audio to the video to get the final output 
     dubbed_video_file_path = f'output/{filename}.mp4'
-
     combine_audio_video(noaudio_video_file_path,dubbed_audio_file_path, dubbed_video_file_path)
 
     try:
@@ -102,6 +104,10 @@ async def upload_video(file: UploadFile = File(...), dub_type: str = Form(...), 
 
         # Creates a video record in the database
         db_video = crud.create_video(db, video_id, filename+".mp4", datetime.now())
+        
+        # Cleans up the temporary files generated during the dubbing process
+        cleanup_temporary_files()
+        
         return db_video
     except NoCredentialsError:
         raise HTTPException(status_code=403, detail="AWS credentials not available")
