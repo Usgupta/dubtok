@@ -2,6 +2,7 @@
 __pycache__/
 ai/__pycache__/
 backend/__pycache__/
+backend/output
 ai/chunks/*.wav
 ai/output_audio/*.wav
 ai/output_audio/*.mp3
