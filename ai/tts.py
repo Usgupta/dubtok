@@ -11,20 +11,18 @@ import time
 
 load_dotenv()
 
-client = Client(
-   api_key = os.getenv("PLAYHT_APIKEY"),
-   user_id = os.getenv("PLAYHT_USERID")
+# Generate audio chunks and save them to temporary WAV files
+
+def generate_tts(voice_id):
+    apik = os.getenv("PLAYHT_APIKEY")
+    client = Client(user_id = os.getenv("PLAYHT_USERID"),api_key = f"Bearer {apik}")
+
   
   	# for on-prem users, uncomment and add the advanced grpc_addr option below. Replace grpc_addr with your endpoint. 
   	# advanced=client.Client
     # .AdvancedOptions(grpc_addr="{your-endpoint}.on-prem.play.ht:11045")
-)
+    
 
-
-
-# Generate audio chunks and save them to temporary WAV files
-
-def generate_tts(voice_id):
 
     audio_segs = []
     transcription = open("../ai/translated_json.json", encoding='utf-8')

@@ -15,7 +15,7 @@ def transcribe(audio_file):
     model="whisper-1",
     response_format="verbose_json",
     timestamp_granularities=["segment"]
-  )
+    )
 
   # Convert the transcript to a dictionary
   transcript_dict = transcript.to_dict()
