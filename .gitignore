@@ -12,3 +12,4 @@ separated/
 *.db
 ai/transcription.json
 ai/translated_json.json
+uploads/
