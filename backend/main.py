@@ -74,11 +74,11 @@ async def upload_video(file: UploadFile = File(...), dub_type: str = Form(...), 
     try:
 
         # Upload the video into AWS s3
-        s3.upload_fileobj(file.file, BUCKET_NAME, video_id + "/" + dub_type + "_" + file.filename)
-        file_url = f"https://{BUCKET_NAME}.s3.amazonaws.com/{video_id}/{dub_type}_{file.filename}"
+        s3.upload_file(dubbed_video_file_path, BUCKET_NAME, video_id + "/" + dub_type + "_" + filename + ".mp4")
+        # file_url = f"https://{BUCKET_NAME}.s3.amazonaws.com/{video_id}/{dub_type}_{filename}"
         
         # Creates a video record in the database
-        db_video = crud.create_video(db, video_id, file.filename, datetime.now())
+        db_video = crud.create_video(db, video_id, filename, datetime.now())
         return db_video
     except NoCredentialsError:
         raise HTTPException(status_code=403, detail="AWS credentials not available")

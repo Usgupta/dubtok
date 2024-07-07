@@ -8,5 +8,6 @@ sqlalchemy
 pydantic
 requests
 ffmpeg
+ffmpeg-python
 pydub
 pyht
