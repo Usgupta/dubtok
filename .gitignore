@@ -10,8 +10,10 @@ ai/separated
 ai/uploads
 separated/
 ai/transcription.json
-ai/translated_json.translated_json
+ai/translated_json.json
 uploads/
 /dubtok
 backend/ffprobe.exe
 backend/ffmpeg.exe
+sample_videos/*.wav
+sample_videos/*.mp4
