@@ -1,5 +1,5 @@
 from sqlalchemy import Column, String, TIMESTAMP
-from backend.db.database import Base
+from db.database import Base
 
 # Creates a Video model which effectively maps to the "videos" table in the database using ORM
 class Video(Base):
