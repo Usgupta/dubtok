@@ -3,7 +3,7 @@ import VideoPreview from "./VideoPreview"
 
 export default function PreviewPage({videoFile, resetPage}){
     return(
-   <div>
+   <div className="h-[450px]">
     <h1 className="text-2xl  md:text-4xl font-poppins mb-10">
         Your Video is Ready!
     </h1>

@@ -15,3 +15,6 @@ ai/translated_json.translated_json
 uploads/
 /dubtok
 
+backend/ffmpeg.exe
+backend/ffprobe.exe
+ai/translated_json.json

@@ -12,16 +12,18 @@ export default function VideoPreview({videoFile}){
         console.log("done")
         var width = video.videoWidth;
         var height = video.videoHeight;
+        console.log(width)
+        console.log(height)
         setWidth((width >= height) ? "w-[90%]" : "h-[80%]")
     };
-   
-   
-        
+
+
+
     return(
         <video
-        className={widthName} controls>
+        className={widthName} data-width={widthName} controls>
         <source src={videoFile}/>
-        </video> 
+        </video>
     )
-    
+
 }
