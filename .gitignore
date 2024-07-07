@@ -1,20 +1,3 @@
-.env
-__pycache__/
-ai/__pycache__/
-backend/__pycache__/
-backend/output
-ai/chunks/*.wav
-ai/output_audio/*.wav
-ai/output_audio/*.mp3
-ai/separated
-ai/uploads
-separated/
-ai/transcription.json
-ai/translated_json.translated_json
-uploads/
-/dubtok
 
 backend/ffmpeg.exe
 backend/ffprobe.exe
-ai/translated_json.json
-ai/translated_json.json
