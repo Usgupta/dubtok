@@ -3,14 +3,14 @@
 import Dropzone, { Accept } from "react-dropzone";
 import { Suspense, useState } from "react";
 import Loading from "./Loading"
-
+import VideoPreview from "./VideoPreview"
 export default function Uploadfile({ setFile, filetype }) {
 
     const handleFileChange = (acceptedFiles) => {
         setVideoFile(acceptedFiles[0])
         setVideoState("active")
-        setFile("active")
-        console.log("active")
+        setFile(acceptedFiles[0])
+      
     }
     const [videoFile, setVideoFile] = useState();
     const [videoState, setVideoState] = useState("start");
@@ -18,9 +18,7 @@ export default function Uploadfile({ setFile, filetype }) {
     if (videoState == "active"){
         return(
             <Suspense fallback = {<Loading/>}>
-                <video width="90%" controls>
-                <source src={URL.createObjectURL(videoFile)}/>
-                </video>
+            <VideoPreview videoFile={URL.createObjectURL(videoFile)}/>
             </Suspense>
             
         )

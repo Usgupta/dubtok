@@ -11,17 +11,27 @@ from dotenv import load_dotenv
 import os
 import shutil
 from services.video_audio_processor import separate_audio_video, combine_audio_video
-
+from ai.ai_service import dubbing 
+from fastapi.middleware.cors import CORSMiddleware
 import sys
 sys.path.append('../')
-
-from ai.ai_service import dubbing 
 
 # Creates the tables in the database if it is not already present
 create_tables()
 
 # Defines the FastAPI application
 app = FastAPI()
+origins = [
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Interface with methods that map to AWS s3
 s3 = boto3.client('s3')
