@@ -27,7 +27,8 @@ module.exports = {
       },
       fontFamily:{
           default: ['Roboto', 'sans-serif'],
-          poppins: ["Poppins", 'sans-serif'],
+          poppins: ['var(--font-poppins)'],
+          inter: ['var(--font-inter)'],
       }
     },
     

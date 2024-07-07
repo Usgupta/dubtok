@@ -11,5 +11,7 @@ ai/uploads
 separated/
 *.db
 ai/transcription.json
-ai/translated_json.json
+ai/translated_json.translated_json
 uploads/
+/dubtok
+

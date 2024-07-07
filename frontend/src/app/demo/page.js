@@ -6,7 +6,7 @@ import ParticleBackground from "../components/ParticlesBackground";
 export default function Home() {
   return (
     
-    <main className="relative overflow-hidden h-[100vh] flex flex-row items-center justify-center">
+    <main className="relative overflow-hidden h-[90vh] flex flex-row items-center justify-center">
 
      <Circle/>
      <TranslateDescription /><FileForm/>

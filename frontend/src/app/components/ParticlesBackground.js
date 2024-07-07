@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 
-export default function ParticleBackground(){
+export default function ParticleBackground({className}){
     const [init, setInit] = useState(false);
 
   // this should be run only once per application lifetime
@@ -527,5 +527,5 @@ export default function ParticleBackground(){
         );
       }
     
-      return <></>;
+      return <div className={`bg-lightgrey w-full h-full absolute -z-10 ${className}`}></div>;
 }
