@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from db.models import Video
+from backend.db.models import Video
 from datetime import datetime
 
 # Gets the video record from the database

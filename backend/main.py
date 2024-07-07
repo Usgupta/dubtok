@@ -1,8 +1,8 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, Form
 from sqlalchemy.orm import Session
-from db.database import SessionLocal, create_tables
-import db.crud as crud
-import db.schemas as schemas
+from backend.db.database import SessionLocal, create_tables
+import backend.db.crud as crud
+import backend.db.schemas as schemas
 import boto3
 import uuid
 from datetime import datetime
@@ -10,7 +10,7 @@ from botocore.exceptions import NoCredentialsError, ClientError
 from dotenv import load_dotenv
 import os
 import shutil
-from services.video_audio_processor import separate_audio_video, combine_audio_video
+from backend.services.video_audio_processor import separate_audio_video, combine_audio_video
 from fastapi.middleware.cors import CORSMiddleware
 
 import sys
