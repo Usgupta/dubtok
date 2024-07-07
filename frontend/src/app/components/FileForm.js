@@ -18,6 +18,10 @@ export default function FileForm(){
         setVideoFile(file)
     }
     async function sendFile(){
+    if (fileState == "inactive"){
+        alert("Upload a video")
+        return
+    }
     if (dubType != undefined){
        const uploaded = await uploadVideoFile(videoFile, dubType);
        const videoId = uploaded["video_id"];
@@ -34,6 +38,7 @@ export default function FileForm(){
 
     function reset(){
         setResultState("start");
+        setFileState("inactive");
     }
     if (resultState == "start"){    
         return (
