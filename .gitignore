@@ -1,4 +1,15 @@
 .env
 __pycache__/
+ai/__pycache__/
+backend/__pycache__/
+backend/output
+ai/chunks/*.wav
+ai/output_audio/*.wav
+ai/output_audio/*.mp3
+ai/separated
+ai/uploads
+separated/
 *.db
+ai/transcription.json
+ai/translated_json.json
 /dubtok

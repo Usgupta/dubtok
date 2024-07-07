@@ -8,8 +8,13 @@ import uuid
 from datetime import datetime
 from botocore.exceptions import NoCredentialsError, ClientError
 from dotenv import load_dotenv
+import os
+import shutil
+from services.video_audio_processor import separate_audio_video, combine_audio_video
+from ai.ai_service import dubbing 
 from fastapi.middleware.cors import CORSMiddleware
-
+import sys
+sys.path.append('../')
 
 # Creates the tables in the database if it is not already present
 create_tables()
@@ -54,13 +59,36 @@ async def upload_video(file: UploadFile = File(...), dub_type: str = Form(...), 
     # Unique id for each video
     video_id = str(uuid.uuid4())
 
+
+    upload_directory = "../uploads"
+    os.makedirs(upload_directory, exist_ok=True)  # Create the directory if it doesn't exist
+    file_path = os.path.join(upload_directory, file.filename)
+
+    # Save the uploaded file
+    with open(file_path, "wb") as file_obj:
+        shutil.copyfileobj(file.file, file_obj)
+
+    filename = os.path.splitext(file.filename)[0]
+
+    audio_file_path = f"../uploads/{filename}.mp3"
+    noaudio_video_file_path = f"../uploads/{filename}_noaudio.mp4"
+
+    separate_audio_video(file_path, audio_file_path,noaudio_video_file_path )
+    
+    dubbed_audio_file_path = dubbing(audio_file_path, dub_type, filename)
+
+    dubbed_video_file_path = f'output/{filename}.mp4'
+
+    combine_audio_video(noaudio_video_file_path,dubbed_audio_file_path, dubbed_video_file_path)
+
     try:
+
         # Upload the video into AWS s3
-        s3.upload_fileobj(file.file, BUCKET_NAME, video_id + "/" + dub_type + "_" + file.filename)
-        file_url = f"https://{BUCKET_NAME}.s3.amazonaws.com/{video_id}/{dub_type}_{file.filename}"
+        s3.upload_file(dubbed_video_file_path, BUCKET_NAME, video_id + "/" + dub_type + "_" + filename + ".mp4")
+        # file_url = f"https://{BUCKET_NAME}.s3.amazonaws.com/{video_id}/{dub_type}_{filename}"
         
         # Creates a video record in the database
-        db_video = crud.create_video(db, video_id, file.filename, datetime.now())
+        db_video = crud.create_video(db, video_id, filename, datetime.now())
         return db_video
     except NoCredentialsError:
         raise HTTPException(status_code=403, detail="AWS credentials not available")

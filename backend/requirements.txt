@@ -7,3 +7,7 @@ boto3
 sqlalchemy
 pydantic
 requests
+ffmpeg
+ffmpeg-python
+pydub
+pyht
