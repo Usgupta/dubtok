@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Poppins } from 'next/font/google'
 import DragBox from "./DragBox";
+import Loading from "./Loading";
 import Uploadfile from "./Uploadfile";
 import FormDrop  from "./Dropdown";
 import SmallButton from "./SmallButton"
@@ -23,6 +24,7 @@ export default function FileForm(){
         return
     }
     if (dubType != undefined){
+       setResultState("loading");
        const uploaded = await uploadVideoFile(videoFile, dubType);
        const videoId = uploaded["video_id"];
        const dubbedVideo = await fetchResults(videoId);
@@ -63,4 +65,13 @@ export default function FileForm(){
          </div>)
     }
 
-    }           
+    if (resultState == "loading"){
+        return(
+            <div className={`mr-10 transition-all duration-300 ${(fileState == "active" ? "h-[500px] w-[250px] lg:w-[750px] p-5 pt-5 lg:pt-10" : "h-[450px] w-[400px] lg:w-[600px] p-10")} bg-lightgrey border-black border-2 drop-shadow-xl rounded-[18px] flex flex-col items-center justify-between`}>
+                 <h1 className='font-medium font-poppins text-lg lg:text-3xl xl:text-4xl font-bold w-[90%]'>Translate your Content</h1>
+                <Loading/>
+            </div>
+        )
+
+    }   
+}        

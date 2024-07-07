@@ -3,11 +3,11 @@ import VideoPreview from "./VideoPreview"
 
 export default function PreviewPage({videoFile, resetPage}){
     return(
-   <div className="w-[400px] h-[450px]">
-    <h1 className="text-2xl  md:text-4xl font-poppins mb-10">
+   <div className="w-[100%] h-[100%]">
+    <h1 className="text-2xl  md:text-4xl font-poppins mb-5">
         Your Video is Ready!
     </h1>
-    <VideoPreview videoFile ={videoFile}/>
-    <SmallButton className= "bg-red hover:bg-darkred mb-5 mt-5 ml-auto" text="Dub Another File!" onClick={resetPage}/>
+    <VideoPreview videoFile ={videoFile} className="mx-auto my-0"/>
+    <SmallButton className= "bg-red hover:bg-darkred mb-5 mt-5 mx-auto " text="Dub Another File!" onClick={resetPage}/>
     </div>)
 }
