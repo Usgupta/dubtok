@@ -15,3 +15,5 @@ uploads/
 /dubtok
 backend/ffprobe.exe
 backend/ffmpeg.exe
+sample_videos/*.wav
+sample_videos/*.mp4

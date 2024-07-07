@@ -33,6 +33,10 @@ origins = [
     "https://localhost.tiangolo.com",
     "http://localhost",
     "http://localhost:3000",
+    "https://dubtok-forked.vercel.app",
+    "https://dubtok-forked.vercel.app/demo",
+    "https://dubtok-forked.vercel.app/",
+    "https://dubtok-forked.vercel.app/demo/",
 ]
 
 app.add_middleware(
