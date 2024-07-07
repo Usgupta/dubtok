@@ -11,3 +11,4 @@ ffmpeg
 ffmpeg-python
 pydub
 pyht
+moviepy

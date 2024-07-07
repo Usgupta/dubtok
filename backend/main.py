@@ -11,10 +11,13 @@ from dotenv import load_dotenv
 import os
 import shutil
 from services.video_audio_processor import separate_audio_video, combine_audio_video
-from ai.ai_service import dubbing 
 from fastapi.middleware.cors import CORSMiddleware
+
 import sys
 sys.path.append('../')
+
+from ai.ai_service import dubbing 
+
 
 # Creates the tables in the database if it is not already present
 create_tables()
@@ -22,6 +25,9 @@ create_tables()
 # Defines the FastAPI application
 app = FastAPI()
 origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
     "http://localhost:3000",
 ]
 
@@ -88,7 +94,7 @@ async def upload_video(file: UploadFile = File(...), dub_type: str = Form(...), 
         # file_url = f"https://{BUCKET_NAME}.s3.amazonaws.com/{video_id}/{dub_type}_{filename}"
         
         # Creates a video record in the database
-        db_video = crud.create_video(db, video_id, filename, datetime.now())
+        db_video = crud.create_video(db, video_id, filename+".mp4", datetime.now())
         return db_video
     except NoCredentialsError:
         raise HTTPException(status_code=403, detail="AWS credentials not available")
