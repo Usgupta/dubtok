@@ -1,5 +1,6 @@
 import json
 from ai.openai_setup import setup_openai
+import os
 
 # Load the environment file and setup OpenAI client
 client = setup_openai()
@@ -10,7 +11,11 @@ client = setup_openai()
 
 
 def create_translated_transcription(target_language):
-  transcription = open("../ai/transcription.json")
+  BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+  transcription_file_path = os.path.join(BASE_DIR, "..", "ai", "transcription.json")
+
+  transcription = open(transcription_file_path)
   data = json.load(transcription)
   translated_json = []
 
@@ -24,7 +29,9 @@ def create_translated_transcription(target_language):
     
     translated_json.append(translated_item)
 
-  with open("../ai/translated_json.json", "w", encoding="utf-8") as json_file:
+  translation_file_path = os.path.join(BASE_DIR, "..", "ai", "translated_json.json")
+
+  with open(translation_file_path, "w", encoding="utf-8") as json_file:
         json.dump(translated_json, json_file, indent=4, ensure_ascii=False)
 
 

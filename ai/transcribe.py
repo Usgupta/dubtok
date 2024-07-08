@@ -1,7 +1,6 @@
 from ai.openai_setup import setup_openai
 import json
-
-
+import os
 
 def transcribe(audio_file):
 
@@ -16,10 +15,15 @@ def transcribe(audio_file):
     response_format="verbose_json",
     timestamp_granularities=["segment"]
     )
+  
+  BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+  print(BASE_DIR)
+
+  file_path = os.path.join(BASE_DIR, "..", "ai", "transcription.json")
 
   # Convert the transcript to a dictionary
   transcript_dict = transcript.to_dict()
-
   # Save the entire JSON response
-  with open("../ai/transcription.json", "w") as json_file:
+  with open(file_path, "w") as json_file:
       json.dump(transcript_dict, json_file, indent=4)

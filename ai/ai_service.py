@@ -10,6 +10,9 @@ from ai.stitch import translated_audio_track
 import ai.newtest as newtest
 from pydub import AudioSegment
 import io
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 # audio_file = "../cookie.mp4"
@@ -42,13 +45,15 @@ def dubbing(file_path, dub_type, filename):
 
     vocal_file = f'separated/mdx_extra/{filename}/vocals.mp3'
 
-    novocal_file = f'separated/mdx_extra/{filename}/no_vocals.mp3'
+    novocal_file = f'separated/mdx_extra/{filename}/no_vocals.mp3' 
 
-    dubbed_audio_path = '../ai/output_audio/translated_final.mp3'
+    dubbed_audio_path = os.path.join(BASE_DIR, "..", "ai", f"output_audio/translated_final.mp3")
 
     transcribe.transcribe(vocal_file)
 
     translated_chunks.create_translated_transcription(target_language=dub_type)
+
+    delvc.del_vc()
 
     voice_id = voice_clone.create_voice_clone(vocal_file)
 
@@ -60,7 +65,7 @@ def dubbing(file_path, dub_type, filename):
 
     sync_translation.sync_audio()
 
-    delvc.del_vc(voice_id)
+    delvc.del_vc()
 
     translated_audio_track(novocal_file, dubbed_audio_path)
 

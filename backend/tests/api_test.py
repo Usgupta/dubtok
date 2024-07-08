@@ -12,11 +12,18 @@ def post_test():
         'dub_type': (None, 'English'),
     }
 
-    response = requests.post('http://127.0.0.1:8000/upload/', headers=headers, files=files)
+    response = requests.post('https://dubtok-production.up.railway.app/upload/', headers=headers, files=files)
+    # response = requests.post('http://0.0.0.0:9090/upload/', headers=headers, files=files)
+    # response = requests.post('http://127.0.0.1:8000/upload/', headers=headers, files=files)
+
+
     return response
 
 def get_test(video_id):
-    response = requests.get(f'http://127.0.0.1:8000/videos/{video_id}')
+    response = requests.get(f'https://dubtok-production.up.railway.app/videos/{video_id}')
+    # response = requests.get(f'http://127.0.0.1:8000/videos/{video_id}')
+    # response = requests.get(f'http://0.0.0.0:9090/videos/{video_id}')
+
     return response
         
 if __name__ == '__main__':

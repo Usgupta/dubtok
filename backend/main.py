@@ -48,8 +48,18 @@ app.add_middleware(
 )
 
 # Interface with methods that map to AWS s3
-s3 = boto3.client('s3')
+
+session = boto3.Session(
+        aws_access_key_id=os.getenv('AWS_ACCESS_KEY'),
+        aws_secret_access_key=os.getenv('AWS_SECRET_KEY'),
+        region_name=os.getenv('AWS_REGION')
+    )
+s3 = session.client('s3')
+
+# s3 = boto3.client('s3')
 BUCKET_NAME = 'tiktoktechjam-2024'
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Loads the environment file containing the OpenAI API key
 load_dotenv()
@@ -85,16 +95,21 @@ async def upload_video(file: UploadFile = File(...), dub_type: str = Form(...), 
     filename = os.path.splitext(file.filename)[0]
     audio_file_path = f"../uploads/{filename}.mp3"
     noaudio_video_file_path = f"../uploads/{filename}_noaudio.mp4"
+    # audio_file_path = os.path.join(BASE_DIR,f"../uploads/{filename}.mp3")
+    # noaudio_video_file_path = os.path.join(BASE_DIR,f"../uploads/{filename}_noaudio.mp4")
+    try: 
+        # Separate the audio from the video file
+        separate_audio_video(file_path, audio_file_path, noaudio_video_file_path)
 
-    # Separate the audio from the video file
-    separate_audio_video(file_path, audio_file_path, noaudio_video_file_path)
+        # Dubs the audio 
+        dubbed_audio_file_path = dubbing(audio_file_path, dub_type, filename)
 
-    # Dubs the audio 
-    dubbed_audio_file_path = dubbing(audio_file_path, dub_type, filename)
+        # Mixes the dubbed audio to the video to get the final output 
+        dubbed_video_file_path = os.path.join(BASE_DIR,"output/{filename}.mp4")
 
-    # Mixes the dubbed audio to the video to get the final output 
-    dubbed_video_file_path = f'output/{filename}.mp4'
-    combine_audio_video(noaudio_video_file_path,dubbed_audio_file_path, dubbed_video_file_path)
+        combine_audio_video(noaudio_video_file_path,dubbed_audio_file_path, dubbed_video_file_path)
+    except: 
+        raise HTTPException(status_code=500)
 
     try:
 

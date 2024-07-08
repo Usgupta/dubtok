@@ -22,10 +22,12 @@ def generate_tts(voice_id):
   	# advanced=client.Client
     # .AdvancedOptions(grpc_addr="{your-endpoint}.on-prem.play.ht:11045")
     
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+    translation_file_path = os.path.join(BASE_DIR, "..", "ai", "translated_json.json")
 
     audio_segs = []
-    transcription = open("../ai/translated_json.json", encoding='utf-8')
+    transcription = open(translation_file_path, encoding='utf-8')
     data = json.load(transcription)
 
     # List to store audio chunks
@@ -54,7 +56,7 @@ def generate_tts(voice_id):
                     # with open(f'chunks/myfile{k}.wav', mode='bx') as f:
                     #     f.write(chunk)
                     
-                    chunk_file = os.path.join(tmpdirname, f"chunk_{i}.wav")
+                    chunk_file = os.path.join(BASE_DIR,tmpdirname, f"chunk_{i}.wav")
                     with wave.open(chunk_file, 'wb') as wave_file:
                         wave_file.setnchannels(1)  # mono audio
                         wave_file.setsampwidth(2)  # 16-bit audio
@@ -69,7 +71,8 @@ def generate_tts(voice_id):
                     combined += chunk_audio
 
                 # Export the combined audio segment to a WAV file
-                combined.export(f"../ai/output_audio/translated_chunk{k}.wav", format="wav")
+                chunk_path = os.path.join(BASE_DIR, "..", "ai", f"output_audio/translated_chunk{k}.wav")
+                combined.export(chunk_path, format="wav")
 
                 audio_chunks = []
 

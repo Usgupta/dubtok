@@ -4,6 +4,7 @@ import json
 from pydub import AudioSegment
 import os
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def adjust_audio_duration(input_file, output_file, target_duration_seconds):
     # Get the duration of the input audio file using ffprobe
@@ -39,17 +40,19 @@ def adjust_audio_duration(input_file, output_file, target_duration_seconds):
 
 def sync_audio():
 
-    translated_json  = open("../ai/translated_json.json")
+    translation_file_path = os.path.join(BASE_DIR, "..", "ai", "translated_json.json")
+
+    translated_json  = open(translation_file_path)
     translated_chunks = json.load(translated_json)
 
     combined = AudioSegment.empty()
 
     for k in range(len(translated_chunks)):
 
-
+        input_file = os.path.join(BASE_DIR, "..", "ai", f"output_audio/translated_chunk{k}.wav")
         # print(len(translated_chunks), k, 'HERE IT ISSSS------')
-        input_file = f"../ai/output_audio/translated_chunk{k}.wav"
-        output_file = f"../ai/output_audio/sync_chunk{k}.wav"
+        # input_file = f"../ai/output_audio/translated_chunk{k}.wav"
+        output_file = os.path.join(BASE_DIR, "..", "ai", f"output_audio/sync_chunk{k}.wav")
         target_duration = translated_chunks[k]["duration"]  # Target duration in seconds
         # print(target_duration)
 
@@ -63,6 +66,8 @@ def sync_audio():
 
         # sync_audio(input_file,output_file,target_duration)
         combined+=AudioSegment.from_file(output_file)
+    
+    combined_file_path = os.path.join(BASE_DIR, "..", "ai", f"output_audio/full_translated.wav")
 
-    combined.export('../ai/output_audio/full_translated.wav',format='wav')
+    combined.export(combined_file_path,format='wav')
     print('saved translation')
