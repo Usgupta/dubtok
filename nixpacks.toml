@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs=["...",ffmpeg]
+nixPkgs=["...","ffmpeg"]
 
 providers = ["...", "python"]
 
@@ -7,4 +7,4 @@ providers = ["...", "python"]
 cmds = ["pip install -r requirement.txt"]
 
 [phases.start]
-cmd = "cd backend && uvicorn main:app --host 0.0.0.0 --port 8000
+cmd = "cd backend && uvicorn main:app --host 0.0.0.0 --port 8000"
