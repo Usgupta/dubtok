@@ -8,20 +8,20 @@ def post_test():
     }
 
     files = {
-        'file': open('../../sample_videos/cx.mp4', 'rb'),
+        'file': open('../../sample_videos/2024-07-09_15.23.22.mp4', 'rb'),
         'dub_type': (None, 'English'),
     }
 
-    response = requests.post('https://dubtok-production.up.railway.app/upload/', headers=headers, files=files)
+    # response = requests.post('https://dubtok-production.up.railway.app/upload/', headers=headers, files=files)
     # response = requests.post('http://0.0.0.0:9090/upload/', headers=headers, files=files)
-    # response = requests.post('http://127.0.0.1:8000/upload/', headers=headers, files=files)
+    response = requests.post('http://127.0.0.1:8000/upload/', headers=headers, files=files)
 
 
     return response
 
 def get_test(video_id):
-    response = requests.get(f'https://dubtok-production.up.railway.app/videos/{video_id}')
-    # response = requests.get(f'http://127.0.0.1:8000/videos/{video_id}')
+    # response = requests.get(f'https://dubtok-production.up.railway.app/videos/{video_id}')
+    response = requests.get(f'http://127.0.0.1:8000/videos/{video_id}')
     # response = requests.get(f'http://0.0.0.0:9090/videos/{video_id}')
 
     return response

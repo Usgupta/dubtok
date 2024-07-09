@@ -7,8 +7,8 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def adjust_audio_duration(input_file, output_file, target_duration_seconds):
-    # Get the duration of the input audio file using ffprobe
     try:
+        # Get the duration of the input audio file using ffprobe
         probe = ffmpeg.probe(input_file)
         audio_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'audio'), None)
         if audio_stream is None:
@@ -22,19 +22,65 @@ def adjust_audio_duration(input_file, output_file, target_duration_seconds):
         speed_ratio = target_duration_seconds / current_duration
 
         # Calculate the speed factor to pass to ffmpeg
-        # Speed factor 1.0 is normal speed, <1.0 is slower, >1.0 is faster
         speed_factor = 1.0 / speed_ratio
 
-        # Use ffmpeg to adjust speed and output to the desired duration
-        (
-            ffmpeg
-            .input(input_file)
-            .filter('atempo', speed_factor)
-            .output(output_file)
-            .run(overwrite_output=True)
-        )
+        # Ensure the speed factor is within the valid range for the atempo filter
+        if speed_factor < 0.5 or speed_factor > 100:
+            # Split the process into multiple steps if necessary
+            temp_output = os.path.join(BASE_DIR,'temp_output.wav')
+            current_file = input_file
+
+            while speed_factor < 0.5 or speed_factor > 100:
+                if speed_factor < 0.5:
+                    step_factor = 0.5
+                else:
+                    step_factor = 100.0
+
+                (
+                    ffmpeg
+                    .input(current_file)
+                    .filter('atempo', step_factor)
+                    .output(temp_output)
+                    .run(overwrite_output=True)
+                )
+
+                # Update the current file and duration for the next iteration
+                current_file = temp_output
+                probe = ffmpeg.probe(current_file)
+                audio_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'audio'), None)
+                current_duration = float(audio_stream['duration'])
+                speed_ratio = target_duration_seconds / current_duration
+                speed_factor = 1.0 / speed_ratio
+
+            # Final adjustment
+            (
+                ffmpeg
+                .input(current_file)
+                .filter('atempo', speed_factor)
+                .output(output_file)
+                .run(overwrite_output=True)
+            )
+
+            try:
+                os.remove(temp_output)
+                print(f'\n Deleted file {temp_output}')
+            except:
+                print(f'\n Cant Delete file {temp_output}')
+
+        else:
+            # Use ffmpeg to adjust speed and output to the desired duration
+            (
+                ffmpeg
+                .input(input_file)
+                .filter('atempo', speed_factor)
+                .output(output_file)
+                .run(overwrite_output=True)
+            )
 
         print(f"Audio adjusted and saved to {output_file} with target duration {target_duration_seconds} seconds")
+
+        
+        
     except ffmpeg.Error as e:
         print(e.stderr)
 

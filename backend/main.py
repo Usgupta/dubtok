@@ -13,7 +13,7 @@ import os
 import shutil
 from services.video_audio_processor import separate_audio_video, combine_audio_video
 from fastapi.middleware.cors import CORSMiddleware
-
+import re
 import sys
 # Add the root directory to the Python path
 root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -64,6 +64,24 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # Loads the environment file containing the OpenAI API key
 load_dotenv()
 
+def reformat_filename(filename):
+    # Remove any leading or trailing whitespace
+    filename = filename.strip()
+    
+    # Separate the filename and extension
+    if '.' in filename:
+        base, extension = filename.rsplit('.', 1)
+    else:
+        base, extension = filename, ''
+
+    # Replace spaces and special characters in the base name with underscores
+    base = re.sub(r'[^\w-]', '_', base)
+
+    # Reconstruct the filename
+    reformatted = f'{base}.{extension}' if extension else base
+
+    return reformatted
+
 # Obtains the DB session
 def get_db():
     db = SessionLocal()
@@ -86,13 +104,20 @@ async def upload_video(file: UploadFile = File(...), dub_type: str = Form(...), 
     # Creates uploads directory containing video file uploads used for local processing if it doesn't exist
     upload_directory = "../uploads"
     os.makedirs(upload_directory, exist_ok=True) 
-    file_path = os.path.join(upload_directory, file.filename)
+
+    reformatted_filename = reformat_filename(file.filename)
+
+    # print(f'REFORMATED TO {reformatted_filename} from {file.filename}')
+
+    file_path = os.path.join(upload_directory, reformatted_filename)
+
+    print(f'saved to {file_path}')
 
     # Save the uploaded file
     with open(file_path, "wb") as file_obj:
         shutil.copyfileobj(file.file, file_obj)
         
-    filename = os.path.splitext(file.filename)[0]
+    filename = os.path.splitext(reformatted_filename)[0]
     audio_file_path = f"../uploads/{filename}.mp3"
     noaudio_video_file_path = f"../uploads/{filename}_noaudio.mp4"
     # audio_file_path = os.path.join(BASE_DIR,f"../uploads/{filename}.mp3")
