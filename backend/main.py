@@ -105,11 +105,13 @@ async def upload_video(file: UploadFile = File(...), dub_type: str = Form(...), 
         dubbed_audio_file_path = dubbing(audio_file_path, dub_type, filename)
 
         # Mixes the dubbed audio to the video to get the final output 
-        dubbed_video_file_path = os.path.join(BASE_DIR,"output/{filename}.mp4")
 
-        combine_audio_video(noaudio_video_file_path,dubbed_audio_file_path, dubbed_video_file_path)
-    except: 
-        raise HTTPException(status_code=500)
+        dubbed_video_file_path = os.path.join(BASE_DIR,f"output/{filename}.mp4")
+        
+        combine_audio_video(noaudio_video_file_path,dubbed_audio_file_path, filename)
+    except Exception as e: 
+        print(e)
+        raise HTTPException(status_code=500, detail = str(e))
 
     try:
 
