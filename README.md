@@ -1,6 +1,10 @@
 # DubTok
 DubTok, an application that automatically dubs your videos into any language. Simply upload your video, choose your desired language, and our solution delivers high-quality, seamlessly dubbed content!
 
+# Demo
+
+Try out Dubtok online: https://dubtok-forked.vercel.app/
+
 ## Folder Structure
 Our project is broken up into the following folders
 ```
