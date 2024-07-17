@@ -8,7 +8,7 @@ def post_test():
     }
 
     files = {
-        'file': open('../../sample_videos/2024-07-09_15.23.22.mp4', 'rb'),
+        'file': open('../../sample_videos/cx.mp4', 'rb'),
         'dub_type': (None, 'English'),
     }
 

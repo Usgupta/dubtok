@@ -14,8 +14,8 @@ def get_voice_id():
 
     headers = {
         "accept": "application/json",
-        "AUTHORIZATION": "33f2378eb16d4dd1b41a3960c944c8db",
-        "X-USER-ID": "T9Be96dxSEMQyzvWqNJb2R8vVo03"
+       "Authorization": f"Bearer {api_key}",
+       'X-USER-ID': f"{user_id}",
     }
 
     response = requests.get(url, headers=headers)
@@ -56,6 +56,8 @@ def del_vc():
 }
 
     response = requests.delete(url, json=payload, headers=headers)
+
+    print('voice clone deleted')
 
     print(response.text)
 # del_vc(voice_id)
